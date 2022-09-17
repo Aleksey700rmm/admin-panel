@@ -9,7 +9,7 @@ import { filterSelect } from "../../actions";
 
 const HeroesFilters = () => {
 
-    const {filters, filtersLoadingStatus, filterName} = useSelector(state => state)
+    const {filters, filtersLoadingStatus, filterName} = useSelector(state => state.filters)
     const dispatch = useDispatch();
 
     const renderFilters = (filters, status) => {

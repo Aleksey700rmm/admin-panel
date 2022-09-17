@@ -20,7 +20,7 @@ const HeroesAddForm = () => {
     const [text, setText] = useState("");
     const [element, setElement] = useState("");
     // const [filters, setFilters] = useState([]);
-    const {filters, filtersLoadingStatus} = useSelector(state => state)
+    const {filters, filtersLoadingStatus} = useSelector(state => state.filters)
 
     const dispatch = useDispatch();
 
@@ -28,6 +28,7 @@ const HeroesAddForm = () => {
         request('http://localhost:3001/filters/', 'GET')
             .then(arr => dispatch(addFilters(arr)))
             .catch(err => console.log(err))
+            // eslint-disable-next-line
     }, []);
 
     const onAdd = (e) => {
@@ -57,6 +58,7 @@ const HeroesAddForm = () => {
 
         if (filters && filters.length > 0) {
             return filters.map(({name, label}) => {
+                // eslint-disable-next-line
                 if (name === 'all')  return;
                 return <option key={name} value={name}>{label}</option>
             })
