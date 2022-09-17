@@ -29,15 +29,23 @@ const reducer = (state = initialState, action) => {
                 heroesLoadingStatus: "error",
             };
         case "DELETE_ITEM":
+            const newHeroList = state.heroes.filter((item) => item.id !== action.payload);
             return {
                 ...state,
-                heroes: state.heroes.filter((item) => item.id !== action.payload),
+                heroes: newHeroList,
+                filteredHeroes: state.filterName === 'all' ? 
+                                newHeroList : 
+                                newHeroList.filter(item => item.element === state.filterName)
             };
         case "ADD_ITEM":
             const newArr = [...state.heroes, action.payload];
             return {
                 ...state,
                 heroes: newArr,
+                filteredHeroes: state.filterName === 'all' ? 
+                    newArr : 
+                    newArr.filter((item) => item.element === state.filterName),
+                heroesLoadingStatus: "idle",
             };
         case 'ADD_FILTERS':
             return {
