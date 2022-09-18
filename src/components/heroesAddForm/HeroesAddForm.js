@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { addItem, addFilters } from "../../actions";
+import {fetchFilters, addItem } from "../../actions";
 import { useHttp } from "../../hooks/http.hook";
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
@@ -25,10 +25,8 @@ const HeroesAddForm = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        request('http://localhost:3001/filters/', 'GET')
-            .then(arr => dispatch(addFilters(arr)))
-            .catch(err => console.log(err))
-            // eslint-disable-next-line
+        dispatch(fetchFilters(request));
+        // eslint-disable-next-line
     }, []);
 
     const onAdd = (e) => {

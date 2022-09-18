@@ -1,3 +1,10 @@
+export const fetchHeroes = (request) => (dispatch) => {
+    dispatch(heroesFetching());
+    request("http://localhost:3001/heroes")
+        .then((data) => dispatch(heroesFetched(data)))
+        .catch(() => dispatch(heroesFetchingError()));
+}
+
 export const heroesFetching = () => {
     return {
         type: "HEROES_FETCHING",
@@ -31,6 +38,12 @@ export const addItem = (newHero) => {
     };
 };
 
+export const fetchFilters = (request) => (dispatch) => {
+    request('http://localhost:3001/filters/')
+        .then(arr => dispatch(addFilters(arr)))
+        .catch(err => console.log(err))
+} 
+
 export const addFilters = (arr) => {
     return {
         type: 'ADD_FILTERS',
@@ -44,3 +57,12 @@ export const filterSelect = (name) => {
         payload: name
     }
 }
+
+// export const filterSelect = (name) => (dispatch) => {
+//     setTimeout(() => {
+//         dispatch({
+//             type: 'FILTER_SELECT',
+//             payload: name
+//         })
+//     }, 1000)
+// }
