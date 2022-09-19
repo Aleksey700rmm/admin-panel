@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import {fetchFilters, addItem } from "../../actions";
+import {fetchFilters } from "../../actions";
+import { heroCreacted } from '../heroesList/heroesSlice'
 import { useHttp } from "../../hooks/http.hook";
 // Задача для этого компонента:
 // Реализовать создание нового героя с введенными данными. Он должен попадать
@@ -39,7 +40,7 @@ const HeroesAddForm = () => {
 
         e.preventDefault();
         request("http://localhost:3001/heroes/", "POST", JSON.stringify(newHero))
-            .then(dispatch(addItem(newHero)))
+            .then(dispatch(heroCreacted(newHero)))
             .catch((err) => console.log(err));
 
             setName('');
