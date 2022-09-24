@@ -2,18 +2,10 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import {fetchFilters, selectAll } from "../heroesFilters/filtersSlice";
-import { heroCreacted } from '../heroesList/heroesSlice'
+// import { heroCreacted } from '../heroesList/heroesSlice'
 import { useHttp } from "../../hooks/http.hook";
 import store from '../../store';
-// Задача для этого компонента:
-// Реализовать создание нового героя с введенными данными. Он должен попадать
-// в общее состояние и отображаться в списке + фильтроваться
-// Уникальный идентификатор персонажа можно сгенерировать через uiid
-// Усложненная задача:
-// Персонаж создается и в файле json при помощи метода POST
-// Дополнительно:
-// Элементы <option></option> желательно сформировать на базе
-// данных из фильтров
+import { useCreacteHeroMutation } from "../../api/apiSlice";
 
 const HeroesAddForm = () => {
     const { request } = useHttp();
@@ -24,6 +16,8 @@ const HeroesAddForm = () => {
     // const [filters, setFilters] = useState([]);
     const { filtersLoadingStatus} = useSelector(state => state.filters)
     const filters = selectAll(store.getState())
+
+    const [creacteHero, {isLoading}] = useCreacteHeroMutation();
 
     const dispatch = useDispatch();
 
@@ -41,9 +35,8 @@ const HeroesAddForm = () => {
         };
 
         e.preventDefault();
-        request("http://localhost:3001/heroes/", "POST", JSON.stringify(newHero))
-            .then(dispatch(heroCreacted(newHero)))
-            .catch((err) => console.log(err));
+
+        creacteHero(newHero).unwrap();
 
             setName('');
             setText('');
@@ -65,13 +58,6 @@ const HeroesAddForm = () => {
             })
         }
     }
-
-    // const getElements = () => {
-    //     request('http://localhost:3001/filters/', 'GET')
-    //         .then(arr => arr.slice(1))
-    //         .then(arr => setFilters(arr))
-    //         .catch(err => console.log(err))
-    // }
 
     return (
         <form className="border p-4 shadow-lg rounded">

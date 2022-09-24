@@ -8,12 +8,6 @@ const initialState = filtersAdapter.getInitialState({
     filterName: 'all'
 });
 
-// const initialState = {
-//     filters: [],
-//     filtersLoadingStatus: 'idle',
-//     filterName: 'all'
-// };
-
 export const fetchFilters = createAsyncThunk(
     'filters/fetchFilters',
     async () => {
@@ -26,10 +20,6 @@ const filtersSlice = createSlice({
     name: 'filters',
     initialState,
     reducers: {
-        // addFilters: (state, action) => {
-        //     state.filters = action.payload
-        //     state.filtersLoadingStatus = 'idle'
-        // },
         filterSelect: (state, action) => {
             state.filterName = action.payload
         }
