@@ -64,7 +64,7 @@
 //     selectAll,
 //     (filter, heroes) => {
 //         if (filter === 'all') {
-//             return heroes; 
+//             return heroes;
 //         } else {
 //             return heroes.filter((item) => item.element === filter);
 //         }

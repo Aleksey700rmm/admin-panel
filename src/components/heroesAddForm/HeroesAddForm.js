@@ -1,23 +1,19 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import {fetchFilters, selectAll } from "../heroesFilters/filtersSlice";
-// import { heroCreacted } from '../heroesList/heroesSlice'
-import { useHttp } from "../../hooks/http.hook";
-import store from '../../store';
+import { fetchFilters, selectAll } from "../heroesFilters/filtersSlice";
+import store from "../../store";
 import { useCreacteHeroMutation } from "../../api/apiSlice";
 
 const HeroesAddForm = () => {
-    const { request } = useHttp();
-
     const [name, setName] = useState("");
     const [text, setText] = useState("");
     const [element, setElement] = useState("");
     // const [filters, setFilters] = useState([]);
-    const { filtersLoadingStatus} = useSelector(state => state.filters)
-    const filters = selectAll(store.getState())
+    const { filtersLoadingStatus } = useSelector((state) => state.filters);
+    const filters = selectAll(store.getState());
 
-    const [creacteHero, {isLoading}] = useCreacteHeroMutation();
+    const [creacteHero] = useCreacteHeroMutation();
 
     const dispatch = useDispatch();
 
@@ -38,26 +34,30 @@ const HeroesAddForm = () => {
 
         creacteHero(newHero).unwrap();
 
-            setName('');
-            setText('');
-            setElement('');
+        setName("");
+        setText("");
+        setElement("");
     };
 
     const renderFilters = (filters, status) => {
-        if (status === 'loading') {
-            return <option>Загрузка элеметов</option>
-        } else if (status === 'error') {
-            return <option>Ошибка загрузки</option>
+        if (status === "loading") {
+            return <option>Загрузка элеметов</option>;
+        } else if (status === "error") {
+            return <option>Ошибка загрузки</option>;
         }
 
         if (filters && filters.length > 0) {
-            return filters.map(({name, label}) => {
+            return filters.map(({ name, label }) => {
                 // eslint-disable-next-line
-                if (name === 'all')  return;
-                return <option key={name} value={name}>{label}</option>
-            })
+                if (name === "all") return;
+                return (
+                    <option key={name} value={name}>
+                        {label}
+                    </option>
+                );
+            });
         }
-    }
+    };
 
     return (
         <form className="border p-4 shadow-lg rounded">

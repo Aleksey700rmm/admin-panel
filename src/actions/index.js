@@ -12,8 +12,7 @@
 //     request('http://localhost:3001/filters/')
 //         .then(arr => dispatch(addFilters(arr)))
 //         .catch(err => console.log(err))
-// } 
-
+// }
 
 // export const heroesFetching = () => {
 //     return {

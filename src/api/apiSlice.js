@@ -1,30 +1,30 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const apiSlice = createApi({
-    reducerPath: 'api',
-    baseQuery: fetchBaseQuery({baseUrl: 'http://localhost:3001'}),
-    tagTypes: ['Heroes', ],
-    endpoints: builder => ({
+    reducerPath: "api",
+    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001" }),
+    tagTypes: ["Heroes"],
+    endpoints: (builder) => ({
         getHeroes: builder.query({
-            query: () => '/heroes',
-            providesTags: ['Heroes']
+            query: () => "/heroes",
+            providesTags: ["Heroes"],
         }),
         creacteHero: builder.mutation({
-            query: hero => ({
-                url: '/heroes',
-                method: 'POST',
-                body: hero
+            query: (hero) => ({
+                url: "/heroes",
+                method: "POST",
+                body: hero,
             }),
-            invalidatesTags: ['Heroes']
+            invalidatesTags: ["Heroes"],
         }),
         deleteHero: builder.mutation({
-            query: id => ({
+            query: (id) => ({
                 url: `/heroes/${id}`,
-                method: 'DELETE'
+                method: "DELETE",
             }),
-            invalidatesTags: ['Heroes']
-        })
-    })
-})
+            invalidatesTags: ["Heroes"],
+        }),
+    }),
+});
 
-export const {useGetHeroesQuery, useCreacteHeroMutation, useDeleteHeroMutation} = apiSlice;
+export const { useGetHeroesQuery, useCreacteHeroMutation, useDeleteHeroMutation } = apiSlice;
